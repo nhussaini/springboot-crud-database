@@ -1,6 +1,7 @@
 package net.javaguides.springboot.controller;
 
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import net.javaguides.springboot.dto.UserDto;
 import net.javaguides.springboot.entity.User;
@@ -29,7 +30,8 @@ public class UserController {
 //        return new ResponseEntity<User>(savedUser, HttpStatus.CREATED);
 //    }
     //refactor above to use DTO(Data Transfer Object)
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto user){
+    //@Valid
+    public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto user){
         UserDto savedUser = userService.createUser(user);
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
@@ -51,7 +53,7 @@ public class UserController {
 
     //build update user rest api
     @PutMapping("{id}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long userId,@RequestBody UserDto user){
+    public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long userId,@RequestBody @Valid UserDto user){
         user.setId(userId);
         UserDto updatedUser = userService.updateUser(user);
         return new ResponseEntity<>(updatedUser,HttpStatus.OK);
